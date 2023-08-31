@@ -18,8 +18,8 @@ import {
   rainbowWallet,
 } from '@rainbow-me/rainbowkit/wallets'
 import { Chain } from '@rainbow-me/rainbowkit'
-import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains'
-import { createClient, configureChains, WagmiConfig } from 'wagmi'
+import { mainnet, polygon, optimism, arbitrum, base } from 'wagmi/chains'
+import { createConfig, configureChains, WagmiConfig } from 'wagmi'
 import { infuraProvider } from 'wagmi/providers/infura'
 import { publicProvider } from 'wagmi/providers/public'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
@@ -55,6 +55,9 @@ const gnosisChain: Chain = {
     default: {
       http: ['https://gnosischain-rpc.gateway.pokt.network'],
     },
+    public: {
+      http: ['https://gnosischain-rpc.gateway.pokt.network'],
+    },
   },
   blockExplorers: {
     etherscan: {
@@ -70,8 +73,8 @@ const gnosisChain: Chain = {
 }
 
 // Web3 Configs
-const { chains, provider } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, gnosisChain],
+const { chains, publicClient } = configureChains(
+  [mainnet, polygon, optimism, arbitrum, base, gnosisChain],
   [
     infuraProvider({ apiKey: process.env.NEXT_PUBLIC_INFURA_ID !== '' && process.env.NEXT_PUBLIC_INFURA_ID }),
     jsonRpcProvider({
@@ -86,17 +89,23 @@ const { chains, provider } = configureChains(
   ]
 )
 
+const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID
+
 const otherWallets = [
   braveWallet({ chains }),
-  ledgerWallet({ chains }),
+  ledgerWallet({ chains, projectId }),
   coinbaseWallet({ chains, appName: app.name }),
-  rainbowWallet({ chains }),
+  rainbowWallet({ chains, projectId }),
 ]
 
 const connectors = connectorsForWallets([
   {
     groupName: 'Recommended',
-    wallets: [injectedWallet({ chains }), metaMaskWallet({ chains }), walletConnectWallet({ chains })],
+    wallets: [
+      injectedWallet({ chains }),
+      metaMaskWallet({ chains, projectId }),
+      walletConnectWallet({ chains, projectId }),
+    ],
   },
   {
     groupName: 'Other Wallets',
@@ -104,7 +113,7 @@ const connectors = connectorsForWallets([
   },
 ])
 
-const wagmiClient = createClient({ autoConnect: true, connectors, provider })
+const wagmiConfig = createConfig({ autoConnect: true, connectors, publicClient })
 
 // Web3Wrapper
 export function Web3Wrapper({ children }) {
@@ -115,7 +124,7 @@ export function Web3Wrapper({ children }) {
   if (!mounted) return null
 
   return (
-    <WagmiConfig client={wagmiClient}>
+    <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider
         appInfo={{
           appName: app.name,
