@@ -65,7 +65,7 @@ export const ThemeToggleList = ({ noTabIndex = false }) => {
                 {({ active, selected }) => (
                   <li
                     className={
-                      'flex cursor-pointer items-center rounded-md py-1 px-2' +
+                      'flex cursor-pointer items-center rounded-md px-2 py-1' +
                       (active ? ' bg-slate-200 dark:bg-slate-800' : '') +
                       (selected && value === 'light' ? ' text-red-500' : '') +
                       (selected && value === 'dark' ? ' text-yellow-500' : '')
