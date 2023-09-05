@@ -75,7 +75,7 @@ function Main() {
             <button
               onClick={openConnectModal}
               type="button"
-              className="m-1 rounded-lg bg-orange-500 py-1 px-3 text-white transition-all duration-150 hover:scale-105"
+              className="m-1 rounded-lg bg-orange-500 px-3 py-1 text-white transition-all duration-150 hover:scale-105"
             >
               useConnectModal
             </button>
@@ -85,7 +85,7 @@ function Main() {
             <button
               onClick={openAccountModal}
               type="button"
-              className="m-1 rounded-lg bg-orange-500 py-1 px-3 text-white transition-all duration-150 hover:scale-105"
+              className="m-1 rounded-lg bg-orange-500 px-3 py-1 text-white transition-all duration-150 hover:scale-105"
             >
               useAccountModal
             </button>
@@ -95,7 +95,7 @@ function Main() {
             <button
               onClick={openChainModal}
               type="button"
-              className="m-1 rounded-lg bg-orange-500 py-1 px-3 text-white transition-all duration-150 hover:scale-105"
+              className="m-1 rounded-lg bg-orange-500 px-3 py-1 text-white transition-all duration-150 hover:scale-105"
             >
               useChainModal
             </button>
@@ -130,7 +130,7 @@ function Main() {
                   onClick={() => switchNetwork?.(x.id)}
                   className={
                     (x.id === chain?.id ? 'bg-green-500' : 'bg-blue-500 hover:scale-105') +
-                    ' m-1 rounded-lg py-1 px-3 text-white transition-all duration-150'
+                    ' m-1 rounded-lg px-3 py-1 text-white transition-all duration-150'
                   }
                 >
                   {x.name}
@@ -171,7 +171,7 @@ function SignMsg() {
         <button
           disabled={isLoading}
           onClick={() => signMsg()}
-          className="ml-1 rounded-lg bg-blue-500 py-1 px-2 text-white transition-all duration-150 hover:scale-105"
+          className="ml-1 rounded-lg bg-blue-500 px-2 py-1 text-white transition-all duration-150 hover:scale-105"
         >
           Sign
         </button>
