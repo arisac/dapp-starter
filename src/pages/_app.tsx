@@ -89,7 +89,7 @@ const { chains, publicClient } = configureChains(
   ]
 )
 
-const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID
+const projectId = process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || 'e3df6fb2d66fdaea0c0d4aa46a2073c0'
 
 const otherWallets = [
   braveWallet({ chains }),
